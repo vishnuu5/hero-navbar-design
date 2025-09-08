@@ -41,7 +41,7 @@ A modern, responsive recreation of the Leo9 Studio website built with Vite, Reac
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/vishnuu5/hero-navbar-design-fission-infotech.git
+git clone https://github.com/vishnuu5/hero-navbar-design.git
 cd leo9-studio-clone
 ```
 
