@@ -114,7 +114,7 @@ const Footer = () => {
           className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center"
         >
           <p className="text-gray-400 text-sm mb-4 sm:mb-0">
-            © 2024 Leo9 Studio. All rights reserved.
+            © 2025 Leo9 Studio. All rights reserved.
           </p>
 
           <div className="flex space-x-6">
