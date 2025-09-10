@@ -1,15 +1,16 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import CompanyLogos from "./components/CompanyLogos";
 import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import Footer from "./components/Footer";
-import "./index.css";
 
 function App() {
   return (
-    <div className="App">
+    <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
+      <CompanyLogos />
       <Services />
       <Portfolio />
       <Footer />

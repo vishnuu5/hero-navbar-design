@@ -1,99 +1,161 @@
-import { motion } from "framer-motion";
-import AnimatedDots from "./AnimatedDots";
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
 
 const Hero = () => {
-  return (
-    <section className="relative min-h-screen flex items-center justify-center hero-gradient overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 dot-pattern"></div>
-      <AnimatedDots />
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-black leading-tight">
-            <motion.span
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="block"
-            >
-              Design
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="block"
-            >
-              Transform
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="block"
-            >
-              Accelerate
-            </motion.span>
-          </h1>
+  const heroRef = useRef(null);
+  const dotsRef = useRef(null);
+  const textRef = useRef(null);
 
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.0 }}
-            className="mt-6 text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
-          >
-            Redefining user experiences through
-            <br />
-            Behavioural Science & AI
-          </motion.p>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Animate dots entrance
+      gsap.fromTo(
+        ".animated-dot",
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 0.8,
+          duration: 1.5,
+          stagger: 0.2,
+          ease: "back.out(1.7)",
+        }
+      );
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-black text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              Start Your Project
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              className="border-2 border-black text-black px-8 py-4 rounded-full text-lg font-medium hover:bg-black hover:text-white transition-all duration-300"
-            >
-              View Our Work
-            </motion.button>
-          </motion.div>
-        </motion.div>
-      </div>
+      // Animate connecting lines
+      gsap.fromTo(
+        ".connecting-line",
+        { strokeDasharray: "0,1000" },
+        {
+          strokeDasharray: "5,5",
+          duration: 2,
+          delay: 1,
+          ease: "power2.inOut",
+        }
+      );
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+      // Animate text elements
+      gsap.fromTo(
+        ".hero-title span",
+        { x: -100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          delay: 0.5,
+          ease: "power3.out",
+        }
+      );
+
+      gsap.fromTo(
+        ".hero-subtitle",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 1.5,
+          ease: "power2.out",
+        }
+      );
+
+      // Continuous floating animation for dots
+      gsap.to(".animated-dot", {
+        y: "random(-20, 20)",
+        x: "random(-10, 10)",
+        duration: "random(2, 4)",
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        stagger: {
+          amount: 2,
+          from: "random",
+        },
+      });
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const AnimatedDots = () => {
+    const dots = [
+      { x: 60, y: 120, color: "bg-red-400", size: "w-4 h-4" },
+      { x: 140, y: 80, color: "bg-purple-500", size: "w-6 h-6" },
+      { x: 220, y: 140, color: "bg-blue-500", size: "w-4 h-4" },
+      { x: 100, y: 200, color: "bg-red-500", size: "w-3 h-3" },
+      { x: 180, y: 220, color: "bg-purple-400", size: "w-5 h-5" },
+      { x: 260, y: 180, color: "bg-blue-400", size: "w-4 h-4" },
+      { x: 80, y: 280, color: "bg-black", size: "w-4 h-4" },
+      { x: 160, y: 300, color: "bg-black", size: "w-3 h-3" },
+      { x: 240, y: 260, color: "bg-purple-600", size: "w-4 h-4" },
+      { x: 40, y: 160, color: "bg-red-300", size: "w-2 h-2" },
+      { x: 300, y: 120, color: "bg-blue-600", size: "w-5 h-5" },
+      { x: 120, y: 340, color: "bg-purple-300", size: "w-3 h-3" },
+    ];
+
+    return (
+      <div
+        className="absolute left-0 top-0 w-full h-full pointer-events-none overflow-hidden"
+        ref={dotsRef}
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-          className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-            className="w-1 h-3 bg-gray-400 rounded-full mt-2"
+        {dots.map((dot, index) => (
+          <div
+            key={index}
+            className={`animated-dot absolute ${dot.color} ${dot.size} rounded-full`}
+            style={{ left: dot.x, top: dot.y }}
           />
-        </motion.div>
-      </motion.div>
+        ))}
+
+        <svg className="absolute inset-0 w-full h-full" style={{ zIndex: -1 }}>
+          {dots.flatMap((dot, index) =>
+            dots
+              .slice(index + 1, index + 3)
+              .map((nextDot, nextIndex) => (
+                <line
+                  key={`${index}-${nextIndex}`}
+                  className="connecting-line text-gray-300"
+                  x1={dot.x + 8}
+                  y1={dot.y + 8}
+                  x2={nextDot.x + 8}
+                  y2={nextDot.y + 8}
+                  stroke="currentColor"
+                  strokeWidth="1"
+                  strokeDasharray="5,5"
+                />
+              ))
+          )}
+        </svg>
+      </div>
+    );
+  };
+
+  return (
+    <section
+      ref={heroRef}
+      className="min-h-screen flex items-center justify-center bg-white pt-20 relative"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="relative h-96 lg:h-[500px] hidden lg:block">
+            <AnimatedDots />
+          </div>
+
+          <div className="text-left lg:text-left" ref={textRef}>
+            <h1 className="hero-title text-5xl sm:text-6xl lg:text-7xl font-bold text-black leading-tight mb-6">
+              <span className="block">Design</span>
+              <span className="block">Transform</span>
+              <span className="block">Accelerate</span>
+            </h1>
+
+            <p className="hero-subtitle text-lg sm:text-xl text-gray-600 mb-8 leading-relaxed">
+              Redefining user experiences through <br />
+              <span className="font-medium text-black">
+                Behavioural Science & AI
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
